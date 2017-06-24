@@ -731,8 +731,8 @@ ProxyFormController.prototype = {
       }
       this.bypassList = rules.bypassList;
     } else {
-      this.singleProxy = null;
-      this.httpProxy = null;
+      this.singleProxy = true;
+      this.httpProxy = {scheme:"http", host:"127.0.0.1", port:8080};
       this.httpsProxy = null;
       this.ftpProxy = null;
       this.fallbackProxy = null;
