@@ -56,8 +56,6 @@ var ProxyFormController = function(id) {
  */
 ProxyFormController.ProxyTypes = {
   AUTO: 'auto_detect',
-  PAC: 'pac_script',
-  DIRECT: 'direct',
   FIXED: 'fixed_servers',
   SYSTEM: 'system'
 };
@@ -133,21 +131,6 @@ ProxyFormController.prototype = {
    * @private
    */
   isAllowedIncognitoAccess_: false,
-
-  /**
-   * @return {string} The PAC file URL (or an empty string).
-   */
-  get pacURL() {
-    return document.getElementById('autoconfigURL').value;
-  },
-
-
-  /**
-   * @param {!string} value The PAC file URL.
-   */
-  set pacURL(value) {
-    document.getElementById('autoconfigURL').value = value;
-  },
 
 
   /**
@@ -414,22 +397,18 @@ ProxyFormController.prototype = {
   dispatchFormClick_: function(e) {
     var t = e.target;
 
-    // Case 1: "Apply"
-    if (t.nodeName === 'INPUT' && t.getAttribute('type') === 'submit') {
-      return this.applyChanges_(e);
-
-    // Case 2: "Use the same proxy for all protocols" in an active section
-    } else if (t.nodeName === 'INPUT' &&
+    // "Use the same proxy for all protocols" in an active section
+    if (t.nodeName === 'INPUT' &&
                t.getAttribute('type') === 'checkbox' &&
                t.parentNode.parentNode.parentNode.classList.contains('active')
               ) {
       return this.toggleSingleProxyConfig_(e);
 
-    // Case 3: "Flip to incognito mode."
+    // "Flip to incognito mode."
     } else if (t.nodeName === 'BUTTON') {
       return this.toggleIncognitoMode_(e);
 
-    // Case 4: Click on something random: maybe changing active config group?
+    // Click on something random: maybe changing active config group?
     } else {
       // Walk up the tree until we hit `form > fieldset` or fall off the top
       while (t && (t.nodeName !== 'FIELDSET' ||
@@ -438,7 +417,7 @@ ProxyFormController.prototype = {
       }
       if (t) {
         this.changeActive_(t);
-        return false;
+        return this.applyChanges_(e);
       }
     }
     return true;
@@ -575,7 +554,7 @@ ProxyFormController.prototype = {
         success.classList.remove('visible');
       else
         window.close();
-    }, 4000);
+    }, 3000);
   },
 
 
@@ -592,19 +571,6 @@ ProxyFormController.prototype = {
     switch (active.id) {
       case ProxyFormController.ProxyTypes.SYSTEM:
         return {mode: 'system'};
-      case ProxyFormController.ProxyTypes.DIRECT:
-        return {mode: 'direct'};
-      case ProxyFormController.ProxyTypes.PAC:
-        var pacScriptURL = this.pacURL;
-        var pacManual = this.manualPac;
-        if (pacScriptURL)
-          return {mode: 'pac_script',
-                  pacScript: {url: pacScriptURL, mandatory: true}};
-        else if (pacManual)
-          return {mode: 'pac_script',
-                  pacScript: {data: pacManual, mandatory: true}};
-        else
-          return {mode: 'auto_detect'};
       case ProxyFormController.ProxyTypes.FIXED:
         var config = {mode: 'fixed_servers'};
         if (this.singleProxy) {
@@ -710,13 +676,6 @@ ProxyFormController.prototype = {
       c.mode = 'pac_script';
     // Activate one of the groups, based on `mode`.
     this.changeActive_(document.getElementById(c.mode));
-    // Populate the PAC script
-    if (c.pacScript) {
-      if (c.pacScript.url)
-        this.pacURL = c.pacScript.url;
-    } else {
-      this.pacURL = '';
-    }
     // Evaluate the `rules`
     if (c.rules) {
       var rules = c.rules;
@@ -782,7 +741,6 @@ ProxyFormController.prototype = {
     if (response.result !== null) {
       var error = JSON.parse(response.result);
       console.error(error);
-      // TODO(mkwst): Do something more interesting
       this.generateAlert_(
           chrome.i18n.getMessage(
               error.details ? 'errorProxyDetailedError' : 'errorProxyError',

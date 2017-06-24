@@ -1,6 +1,6 @@
 {
   "extName":  {
-    "message": "burp proxy enabler",
+    "message": "Burp Proxy Enabler",
     "description": "The extension name."
   },
   "extDescription": {
@@ -28,7 +28,7 @@
     "description": "Error message, displayed when failing to set incognito proxy settings."
   },
   "successfullySetProxy": {
-    "message": "Your proxy settings have been saved successfully; this window will close automagically. Have a nice day!",
+    "message": "Your proxy settings have been saved successfully",
     "description": "Success message, displayed after proxy settings have been written."
   },
   "errorPopupTitle": {

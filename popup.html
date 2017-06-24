@@ -83,24 +83,7 @@
           </fieldset>
         </section>
       </fieldset>
-      <fieldset id="direct">
-        <legend>Direct Connection</legend>
-        <input type="radio" name="proxyType" id="proxyTypeDirect" value="direct">
-        <label for="proxyTypeDirect">Your computer is <em>directly connected</em> to the internet; no need for a proxy.</label>
-      </fieldset>
-      <fieldset id="pac_script">
-        <legend>Automatic Configuration</legend>
-        <input type="radio" name="proxyType" id="proxyTypeAutoconfig" value="autoconfig">
-        <label for="proxyTypeAutoconfig">Your proxy supports <em>automatic configuration</em>.</label>
-
-        <section>
-          <label for="autoconfigURL">Autoconfiguration URL (PAC file)</label>
-          <input type="url" name="autoconfigURL" id="autoconfigURL">
-          <input type="hidden" name="autoconfigData" id="autoconfigData">
-        </section>
-      </fieldset>
-      <input type="submit" value="Save proxy settings">
-      <button value="incognito">Configure incognito window settings.</button>
+      <button value="incognito">Configure incognito</button>
     </form>
   </div>
   <script src="./proxy_form_controller.js"></script>
