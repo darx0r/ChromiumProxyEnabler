@@ -653,13 +653,13 @@ ProxyFormController.prototype = {
       this.config_.incognito = this.generateProxyConfig_();
       div.classList.remove('incognito');
       this.recalcFormValues_(this.config_.regular);
-      button.innerText = 'Configure incognito window settings.';
+      button.innerText = 'Configure incognito';
     } else {
       // In cognito mode, switching to incognito.
       this.config_.regular = this.generateProxyConfig_();
       div.classList.add('incognito');
       this.recalcFormValues_(this.config_.incognito);
-      button.innerText = 'Configure regular window settings.';
+      button.innerText = 'Configure regular';
     }
   },
 
