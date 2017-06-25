@@ -1,10 +1,10 @@
 {
   "extName":  {
-    "message": "Burp Proxy Enabler",
+    "message": "Proxy Enabler",
     "description": "The extension name."
   },
   "extDescription": {
-    "message": "Set Chrome-specific proxies for using burp",
+    "message": "Set Chrome-specific proxies for using proxy server",
     "description": "The extension description."
   },
   "headerDirectConnection": {
