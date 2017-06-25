@@ -364,7 +364,6 @@ ProxyFormController.prototype = {
   handleProxyErrorHandlerResponse_: function(response) {
     if (response.result !== null) {
       var error = JSON.parse(response.result);
-      console.error(error);
       this.generateAlert_(
           chrome.i18n.getMessage(
               error.details ? 'errorProxyDetailedError' : 'errorProxyError',
