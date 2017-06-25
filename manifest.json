@@ -1,7 +1,7 @@
 {
-  "name": "__MSG_extName__",
-  "version": "0.4",
-  "description": "__MSG_extDescription__",
+  "name": "Proxy Enabler",
+  "version": "0.1",
+  "description": "enable defining proxy server for chromium, specifically on variants such as linux which doesn't support it from settings",
   "default_locale": "en",
   "browser_action": {
     "default_icon": "icon16.png",
